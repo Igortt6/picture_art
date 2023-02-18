@@ -954,19 +954,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var modals = function modals() {
+  var btnPressed = false;
+
   function bindModal(triggerSelector, modalSelector, closeSelector) {
-    var closeByOverlayOrEsc = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+    var destroy = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
     var triggers = document.querySelectorAll(triggerSelector),
         modal = document.querySelector(modalSelector),
         close = document.querySelector(closeSelector),
         windows = document.querySelectorAll('[data-modal]'),
-        scroll = calcScroll();
+        scroll = calcScroll(),
+        gift = document.querySelector('.fixed-gift');
 
     function openPopup() {
       modal.style.display = "block";
       document.body.style.overflow = "hidden";
       document.body.style.marginRight = "".concat(scroll, "px");
       document.addEventListener("keydown", ifEsc);
+      gift.style.marginRight = "".concat(scroll, "px");
     }
 
     function closePopup() {
@@ -974,10 +978,11 @@ var modals = function modals() {
       document.body.style.overflow = "";
       document.body.style.marginRight = "0px";
       document.removeEventListener("keydown", ifEsc);
+      gift.style.marginRight = "";
     }
 
     function ifEsc(e) {
-      if (e.key === "Escape" && closeByOverlayOrEsc) {
+      if (e.key === "Escape") {
         console.log('Escape :>> ');
         closePopup();
       }
@@ -986,6 +991,7 @@ var modals = function modals() {
     function allPopup() {
       windows.forEach(function (item) {
         item.style.display = 'none';
+        item.classList.add('animated', 'fadeIn');
       });
     }
 
@@ -994,6 +1000,12 @@ var modals = function modals() {
         if (e.target) {
           // event.target - якщо існуе
           e.preventDefault(); // відміняемо перезавантаження, при клікі не на кнопку(на лінк)
+        }
+
+        btnPressed = true; // кудись клікнув
+
+        if (destroy) {
+          item.remove();
         }
 
         allPopup();
@@ -1005,7 +1017,7 @@ var modals = function modals() {
       closePopup();
     });
     modal.addEventListener('click', function (e) {
-      if (e.target === modal && closeByOverlayOrEsc) {
+      if (e.target === modal) {
         allPopup();
         closePopup();
       }
@@ -1015,6 +1027,7 @@ var modals = function modals() {
   function showModalByTime(selector, time) {
     setTimeout(function () {
       var display;
+      var gift = document.querySelector('.fixed-gift');
       document.querySelectorAll('[data-modal]').forEach(function (item) {
         if (getComputedStyle(item).display !== 'none') {
           display = "block";
@@ -1024,6 +1037,9 @@ var modals = function modals() {
       if (!display) {
         document.querySelector(selector).style.display = "block";
         document.body.style.overflow = "hidden";
+        scroll = calcScroll();
+        document.body.style.marginRight = "".concat(scroll, "px");
+        gift.style.marginRight = "".concat(scroll, "px");
       }
     }, time);
   }
@@ -1040,9 +1056,19 @@ var modals = function modals() {
     return scrollWidth;
   }
 
+  function openByScroll(selector) {
+    window.addEventListener('scroll', function () {
+      if (!btnPressed && window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+        document.querySelector(selector).click();
+      }
+    });
+  }
+
   bindModal('.button-design', '.popup-design', '.popup-design .popup-close');
   bindModal('.button-consultation', '.popup-consultation', '.popup-consultation .popup-close');
-  showModalByTime('.popup-consultation', 5000);
+  bindModal('.fixed-gift', '.popup-gift', '.popup-gift .popup-close', true); // showModalByTime('.popup-consultation', 5000);
+
+  openByScroll('.fixed-gift');
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (modals);
