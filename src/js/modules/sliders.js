@@ -8,7 +8,7 @@ const sliders = (slides, dir, prev, next) => {
         }
 
         if (n < 1) {
-            slideIndex - items.length;
+            slideIndex = items.length;
         }
 
         items.forEach(item => {
@@ -32,13 +32,13 @@ const sliders = (slides, dir, prev, next) => {
 
         prevBtn.addEventListener('click', () => {
             chengeSlide(-1);
-            items[slideIndex - 1].classList.remove('slideInLeft');
-            items[slideIndex - 1].classList.add('slideInRight');
+            items[slideIndex - 1].classList.remove('slideInRight');
+            items[slideIndex - 1].classList.add('slideInLeft');
         });
         nextBtn.addEventListener('click', () => {
             chengeSlide(1);
-            items[slideIndex - 1].classList.remove('slideInRight');
-            items[slideIndex - 1].classList.add('slideInLeft');
+            items[slideIndex - 1].classList.remove('slideInLeft');
+            items[slideIndex - 1].classList.add('slideInRight');
         })
 
     } catch (e) {
