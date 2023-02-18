@@ -939,6 +939,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
   Object(_modules_modals__WEBPACK_IMPORTED_MODULE_0__["default"])();
   Object(_modules_sliders__WEBPACK_IMPORTED_MODULE_1__["default"])('.feedback-slider-item', '', '.main-prev-btn', '.main-next-btn');
+  Object(_modules_sliders__WEBPACK_IMPORTED_MODULE_1__["default"])('.main-slider-item', 'vertical');
 });
 
 /***/ }),
@@ -1092,7 +1093,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var sliders = function sliders(slides, dir, prev, next) {
-  var slideIndex = 1;
+  var slideIndex = 1,
+      paused = false;
   var items = document.querySelectorAll(slides);
 
   function showSlides(n) {
@@ -1133,7 +1135,31 @@ var sliders = function sliders(slides, dir, prev, next) {
       items[slideIndex - 1].classList.remove('slideInLeft');
       items[slideIndex - 1].classList.add('slideInRight');
     });
-  } catch (e) {}
+  } catch (e) {} // Навішуємо обробник на весь слайдер через parentNode, та в paused запамятовуємо інтервал при нведенні миші
+
+
+  function activateAnimation() {
+    if (dir === 'vertical') {
+      paused = setInterval(function () {
+        chengeSlide(1);
+        items[slideIndex - 1].classList.add('slideInDown');
+      }, 3000);
+    } else {
+      paused = setInterval(function () {
+        chengeSlide(1);
+        items[slideIndex - 1].classList.remove('slideInLeft');
+        items[slideIndex - 1].classList.add('slideInRight');
+      }, 3000);
+    }
+  }
+
+  activateAnimation();
+  items[0].parentNode.addEventListener('mouseenter', function () {
+    clearInterval(paused);
+  });
+  items[0].parentNode.addEventListener('mouseleave', function () {
+    activateAnimation();
+  });
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (sliders);
