@@ -13,7 +13,7 @@ window.addEventListener('DOMContentLoaded', () => {
     sliders('.main-slider-item', 'vertical');
     forms();
     mask('[name="phone"]');
-    checkNumInputs('[name="name"]');
-    checkNumInputs('[name="message"]');
+    // checkNumInputs('[name="name"]');
+    // checkNumInputs('[name="message"]');
     showMoreStyles('.button-styles', '.styles-2');
 })
