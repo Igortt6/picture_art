@@ -1,4 +1,3 @@
-
 const mask = (selector) => {
     let setCursorPosition = (pos, elem) => {
         elem.focus();

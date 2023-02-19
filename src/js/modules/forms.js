@@ -1,5 +1,4 @@
 import checkNumInputs from "./checkNumInputs";
-import { postData } from "../services/requests"
 
 const forms = () => {
     const form = document.querySelectorAll('form'),
@@ -11,7 +10,7 @@ const forms = () => {
     const message = {
         loading: 'Завантаження...',
         success: 'Дякую, ми з вами звʼяжемось',
-        failed: "Щось пішло не так...",
+        fail: "Щось пішло не так...",
         spinner: 'assets/img/spinner.gif',
         ok: 'assets/img/ok.png',
         fail: 'assets/img/fail.png'
@@ -22,6 +21,15 @@ const forms = () => {
         question: 'assets/question.php'
     }
 
+    //  відправляемо данні на сервер, чекаємо відповіді. Переводимо відповідь у потрібний формат
+    const postData = async (url, data) => {
+        let res = await fetch(url, {
+            method: "POST",
+            body: data
+        });
+
+        return await res.text();
+    }
     const clearInputs = () => {
         inputs.forEach(item => {
             item.value = "";
@@ -70,9 +78,7 @@ const forms = () => {
 
             const formData = new FormData(item);                // FormData збирає всі дані з форми.
             let api;                                            // куди будем відправляти форму
-            item.closest('.popup-design') ||
-                item.classList.contains('calc_form') ?
-                api = path.desiner : api = path.question;       // якщо при відправленні форми, форма має батьківський елемент .popup-design - path.desiner. АБО path.question
+            item.closest('.popup-design') || item.classList.contains('calc_form') ? api = path.desiner : api = path.question; // якщо при відправленні форми, форма має батьківський елемент .popup-design - path.desiner. АБО path.question
 
             postData(api, formData)
                 .then(res => {                                  // обробка вдачної відправки форми. 
@@ -82,7 +88,7 @@ const forms = () => {
                 })
                 .catch(() => {                                  // обробка помилки при відправці
                     statusImg.setAttribute('src', message.fail);
-                    textMessage.textContent = message.failed;
+                    textMessage.textContent = message.fail;
                 })
                 .finally(() => {
                     clearInputs();
