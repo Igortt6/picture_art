@@ -12,7 +12,7 @@ window.addEventListener('DOMContentLoaded', () => {
     sliders('.feedback-slider-item', '', '.main-prev-btn', '.main-next-btn');
     sliders('.main-slider-item', 'vertical');
     forms();
-    // mask('[name="phone"]');
+    mask('[name="phone"]');
     // checkNumInputs('[name="name"]');
     // checkNumInputs('[name="message"]');
     showMoreStyles('.button-styles', '.styles-2');
