@@ -3,7 +3,7 @@ import sliders from "./modules/sliders";
 import forms from "./modules/forms";
 import mask from "./modules/mask";
 import checkNumInputs from "./modules/checkNumInputs";
-import showMoreStyles from "./modules/showMoreFiles";
+import showMoreStyles from "./modules/showMoreStyles";
 
 window.addEventListener('DOMContentLoaded', () => {
     "use strict";
@@ -13,7 +13,7 @@ window.addEventListener('DOMContentLoaded', () => {
     sliders('.main-slider-item', 'vertical');
     forms();
     mask('[name="phone"]');
-    checkNumInputs('[name="name"]');
-    checkNumInputs('[name="message"]');
-    showMoreStyles('.button-styles', '.styles-2');
+    // checkNumInputs('[name="name"]');
+    // checkNumInputs('[name="message"]');
+    showMoreStyles('.button-styles', '#styles .row');
 })
