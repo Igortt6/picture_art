@@ -755,6 +755,7 @@ h4 {
 }
 
 .portfolio-wrapper {
+  justify-content: center;
   display: flex;
   flex-wrap: wrap;
 }
