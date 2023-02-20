@@ -72,6 +72,13 @@ const forms = () => {
             let api;                                            // куди будем відправляти форму
             item.closest('.popup-design') || item.classList.contains('calc_form') ? api = path.desiner : api = path.question; // якщо при відправленні форми, форма має батьківський елемент .popup-design - path.desiner. АБО path.question
 
+            if (item.querySelector('.calc-price')) {
+                formData.append("size", size.options[size.selectedIndex].text);
+                formData.append("material", material.options[material.selectedIndex].text);
+                formData.append("options", options.options[options.selectedIndex].text);
+                formData.append('prise', item.querySelector('.calc-price').textContent)
+            }
+
             postData(api, formData)
                 .then(res => {                                  // обробка вдачної відправки форми. 
                     console.log(res);
