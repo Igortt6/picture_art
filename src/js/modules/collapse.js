@@ -28,6 +28,4 @@ const collapse = (triggersSelector) => {
 
 };
 
-
-
 export default collapse;
