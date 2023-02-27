@@ -10,6 +10,7 @@ import pictureSize from "./modules/pictureSize";
 import collapse from "./modules/collapse";
 import burger from "./modules/burger";
 import scrolling from "./modules/scrolling";
+import drop from "./modules/drop";
 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -29,4 +30,5 @@ window.addEventListener('DOMContentLoaded', () => {
     collapse('.accordion-heading')
     burger('.burger-menu', '.burger')
     scrolling('.pageup');
+    drop()
 })
