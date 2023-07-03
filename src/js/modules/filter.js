@@ -26,12 +26,18 @@ const filter = () => {
             no.classList.add('animated', 'fadeIn');
         }
     }
-    items.forEach(item => {                                     // отримуємо класс натиснутої кнопки МЕНЮ 
+    items.forEach(item => {
+        // отримуємо класс натиснутої кнопки МЕНЮ 
         item.addEventListener('click', (e) => {
+
             const targetClass = e.target.className
             const markType = wrapper.querySelectorAll(`.${targetClass}`); // Отримуємо всі елементи з таким самим класом МЕНЮ
-            // console.log(markType);
             typeFilter(markType);
+
+            items.forEach(item => {
+                item.classList.remove('active');
+            });
+            item.classList.add('active');
         })
     })
 }
